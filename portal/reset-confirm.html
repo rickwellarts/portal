@@ -5,8 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Confirmar redefinição — CCE 4.0</title>
   <link rel="stylesheet" href="./assets/style.css" />
-  <script type="module">import "./assets/auth.js";</script>
-  <script>
+</head>
+
+<body class="form_cadastro">
+  <div class="login-bg-layer"></div>
+
+  <div class="card auth-card">
+    <h1>Definir nova senha</h1>
+    <p id="info" class="muted"></p>
+    <form id="confirmForm" class="form" novalidate>
+      <label for="nova">Nova senha</label>
+      <input id="nova" type="password" name="nova" required />
+      <button class="btn primary" type="submit">Salvar</button>
+    </form>
+    <a class="link" href="./index.html">Voltar ao login</a>
+  </div>
+
+  <!-- Carrega auth.js e usa uma pequena rotina para aplicar o token -->
+  <script type="module">
+    import './assets/auth.js'; // garante que o módulo de autenticação seja executado (pode expor window.cceAuth)
+
     window.addEventListener('DOMContentLoaded', ()=>{
       const params = new URLSearchParams(location.search);
       const token = params.get('token');
@@ -17,31 +35,24 @@
         e.preventDefault();
         if(!token){ alert('Token inválido.'); return; }
         const pwd = form.querySelector('input[name=nova]').value;
+        if(!pwd || pwd.length < 6){ alert('Informe uma senha com ao menos 6 caracteres.'); return; }
         try{
-          await window.cceAuth.resetWithToken(token, pwd);
-          alert('Senha redefinida com sucesso!');
-          location.href = './index.html';
-        }catch(err){ alert(err.message); }
+          // Se auth.js expõe uma API global, por exemplo window.cceAuth.resetWithToken
+          if (window.cceAuth && typeof window.cceAuth.resetWithToken === 'function') {
+            await window.cceAuth.resetWithToken(token, pwd);
+            alert('Senha redefinida com sucesso!');
+            location.href = './index.html';
+          } else if (typeof resetPasswordWithToken === 'function') {
+            // fallback caso exista função global nomeada diferente
+            await resetPasswordWithToken(token, pwd);
+            alert('Senha redefinida com sucesso!');
+            location.href = './index.html';
+          } else {
+            throw new Error('API de autenticação não encontrada. Verifique ./assets/auth.js');
+          }
+        }catch(err){ alert(err.message || 'Erro ao redefinir senha.'); }
       });
     });
   </script>
-</head>
-
-<body class="form_cadastro">
-  <!-- fundo com gradientes -->
-  <div class="login-bg-layer"></div>
-
-
-  <div class="card auth-card">
-    <h1>Definir nova senha</h1>
-    <p id="info" class="muted"></p>
-    <form id="confirmForm" class="form">
-      <label>Nova senha</label>
-      <input type="password" name="nova" required />
-      <button class="btn primary" type="submit">Salvar</button>
-    </form>
-    <a class="link" href="./index.html">Voltar ao login</a>
-  </div>
-
 </body>
 </html>
