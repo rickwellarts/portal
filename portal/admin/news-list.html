@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gerenciar notícias — Admin</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .admin-shell { max-width: 1120px; margin: 24px auto; padding: 0 16px; }
+    .card { background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px; }
+    .btn { display:inline-block; padding:8px 12px; border-radius:10px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:#eee; text-decoration:none; cursor:pointer; }
+    .btn:hover { background:rgba(255,255,255,.12); }
+    .btn-xs { padding:4px 8px; font-size:12px; }
+    .btn-primary { background:#f4c013; color:#111; border-color:#f4c013; }
+    .muted { opacity:.7; }
+
+    .news-card { border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px; margin-bottom:12px; background:rgba(255,255,255,.02); }
+    .row { display:grid; grid-template-columns: 152px 1fr auto auto; gap:12px; align-items:center; }
+    .thumb {
+      width:152px; height:86px; /* 16:9 */
+      border-radius:10px; overflow:hidden; background:#0e1116; display:flex; align-items:center; justify-content:center;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .thumb img { width:100%; height:100%; object-fit:cover; }
+
+    /* Modal */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; z-index:2000; }
+    .modal{ width:min(820px, 94vw); background:#12151b; border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px; }
+    .modal h3{ margin:0 0 8px; }
+    .input, .textarea { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); color:#eee; border-radius:10px; padding:10px 12px; }
+    .textarea { min-height:180px; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
+
+    .grid { display:grid; gap:10px; grid-template-columns: 1fr; }
+    @media (min-width: 720px) {
+      .grid { grid-template-columns: 1fr 280px; align-items:start; }
+    }
+    .thumb-edit {
+      display:flex; flex-direction:column; gap:10px;
+      background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08);
+      padding:10px; border-radius:12px;
+    }
+    .thumb-big { width:100%; aspect-ratio:16/9; background:#0e1116; border-radius:10px; border:1px solid rgba(255,255,255,.08); overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .thumb-big img { width:100%; height:100%; object-fit:cover; }
+  </style>
+</head>
+<body class="app-bg">
+  <div class="admin-shell">
+    <header class="card" style="display:flex;justify-content:space-between;align-items:center;">
+      <div><a class="btn" href="./index.html">← Voltar</a></div>
+      <strong>Gerenciar notícias</strong>
+      <div></div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <div id="news-admin-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal de edição -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal">
+      <h3>Editar notícia</h3>
+
+      <div class="grid">
+        <div>
+          <label>Título</label>
+          <input id="m-title" class="input" maxlength="80">
+
+          <label style="margin-top:8px;">Subtítulo</label>
+          <input id="m-subtitle" class="input" maxlength="120">
+
+          <label style="margin-top:8px;">Corpo (HTML)</label>
+          <textarea id="m-body" class="textarea" placeholder="Cole o HTML do editor principal, se precisar."></textarea>
+        </div>
+
+        <div class="thumb-edit">
+          <div class="thumb-big">
+            <img id="m-thumb-img" alt="thumbnail">
+          </div>
+          <input id="m-thumb-file" type="file" accept="image/*">
+          <small class="muted">Corte automático para 16:9 (ex.: 1280×720).</small>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="m-cancel" class="btn">Cancelar</button>
+        <button id="m-save" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== Storage compat ======
+    const LS_NEW = 'admin_noticias';               // novo
+    const LS_OLD = 'admin_news';                   // se você tiver usado outro nome no passado
+    const LS_JS  = 'news_items';                   // fallback para news.js (title, subtitle, body, ts...)
+
+    function loadAll(){
+      // preferir novo formato
+      let list = readSafe(LS_NEW);
+      if (list.length) return list;
+
+      // tentar formato antigo do seu news.js
+      list = readSafe(LS_JS).map(mapFromOldJs);
+      if (list.length) {
+        saveAll(list); // migra
+        return list;
+      }
+
+      // tentar outro legado
+      list = readSafe(LS_OLD).map(mapFromOldAny);
+      if (list.length) {
+        saveAll(list);
+        return list;
+      }
+
+      return [];
+    }
+    function readSafe(key){
+      try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+    }
+    function saveAll(arr){
+      localStorage.setItem(LS_NEW, JSON.stringify(arr));
+    }
+    function mapFromOldJs(n){
+      return {
+        id: n.id || Date.now()+Math.random().toString(16).slice(2),
+        titulo: n.title || '(sem título)',
+        subtitulo: n.subtitle || '',
+        corpoHtml: n.body || '',
+        thumb: n.thumb || null,
+        destaque: !!n.highlight,
+        criadoEm: n.ts || Date.now()
+      };
+    }
+    function mapFromOldAny(n){
+      // tentativa genérica
+      return {
+        id: n.id || Date.now()+Math.random().toString(16).slice(2),
+        titulo: n.titulo || n.title || '(sem título)',
+        subtitulo: n.subtitulo || n.subtitle || '',
+        corpoHtml: n.corpoHtml || n.body || '',
+        thumb: n.thumb || null,
+        destaque: !!(n.destaque ?? n.highlight),
+        criadoEm: n.criadoEm || n.ts || Date.now()
+      };
+    }
+
+    function listNews(){
+      return loadAll().sort((a,b)=> b.criadoEm - a.criadoEm);
+    }
+    function upsertNews(partial){
+      const arr = loadAll();
+      const ix = arr.findIndex(x => x.id == partial.id);
+      if (ix >= 0) {
+        arr[ix] = { ...arr[ix], ...partial };
+      } else {
+        arr.push({
+          id: partial.id || (Date.now()+''), titulo:'', subtitulo:'', corpoHtml:'',
+          thumb:null, destaque:false, criadoEm: Date.now(), ...partial
+        });
+      }
+      saveAll(arr);
+    }
+    function deleteNews(id){
+      const arr = loadAll().filter(x => x.id != id);
+      saveAll(arr);
+    }
+
+    // ====== UI ======
+    const backdrop = document.getElementById('modal-backdrop');
+    const mtitle = document.getElementById('m-title');
+    const msubtitle = document.getElementById('m-subtitle');
+    const mbody = document.getElementById('m-body');
+    const mthumbImg = document.getElementById('m-thumb-img');
+    const mthumbFile = document.getElementById('m-thumb-file');
+    const msave = document.getElementById('m-save');
+    const mcancel = document.getElementById('m-cancel');
+    let editingId = null;
+    let editingThumb = null;
+
+    function openModal(n){
+      editingId = n.id;
+      mtitle.value = n.titulo || '';
+      msubtitle.value = n.subtitulo || '';
+      mbody.value = (n.corpoHtml || '').toString();
+      editingThumb = n.thumb || null;
+      mthumbImg.src = editingThumb || '';
+      backdrop.style.display = 'flex';
+    }
+    function closeModal(){
+      editingId = null;
+      editingThumb = null;
+      mthumbImg.src = '';
+      backdrop.style.display = 'none';
+    }
+    mcancel.addEventListener('click', closeModal);
+
+    // troca de thumbnail com recorte 16:9
+    mthumbFile.addEventListener('change', async (e)=>{
+      const f = e.target.files?.[0];
+      if (!f) return;
+      const dataUrl = await fileToDataURL(f);
+      editingThumb = await makeThumb169(dataUrl, 1280, 720);
+      mthumbImg.src = editingThumb;
+      e.target.value = '';
+    });
+
+    msave.addEventListener('click', ()=>{
+      if (!editingId) return;
+      upsertNews({
+        id: editingId,
+        titulo: mtitle.value.trim(),
+        subtitulo: msubtitle.value.trim(),
+        corpoHtml: mbody.value,
+        thumb: editingThumb
+      });
+      closeModal();
+      render();
+    });
+
+    function render() {
+      const mount = document.getElementById('news-admin-list');
+      const items = listNews();
+      if (!items.length) { mount.innerHTML = `<p class="muted">Sem notícias.</p>`; return; }
+
+      mount.innerHTML = items.map(n => `
+        <article class="news-card" id="item-${n.id}">
+          <div class="row">
+            <div class="thumb">
+              ${n.thumb ? `<img src="${n.thumb}" alt="">` : `<span class="muted" style="font-size:11px">sem capa</span>`}
+            </div>
+
+            <div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <strong>${escapeHtml(n.titulo||'(sem título)')}</strong>
+                ${n.destaque ? '<span style="color:gold">★ Destaque</span>' : ''}
+              </div>
+              <div class="muted" style="margin-top:2px;">${escapeHtml(n.subtitulo||'')}</div>
+              <div class="muted" style="font-size:12px;margin-top:4px;">
+                Publicado em ${new Date(n.criadoEm).toLocaleString('pt-BR')}
+              </div>
+            </div>
+
+            <button class="btn btn-xs btn-toggle" data-id="${n.id}">
+              ${n.destaque ? 'Remover destaque' : 'Destacar'}
+            </button>
+            <div style="display:flex;gap:6px;justify-self:end;">
+              <button class="btn btn-xs btn-edit" data-id="${n.id}">Editar</button>
+              <button class="btn btn-xs btn-del" data-id="${n.id}">Excluir</button>
+              <a class="btn btn-xs" href="/portal/news.html?id=${encodeURIComponent(n.id)}" target="_blank">Ver</a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      mount.querySelectorAll('.btn-toggle').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.dataset.id;
+          const items = listNews();
+          const n = items.find(x=>x.id==id); if (!n) return;
+          upsertNews({ id, destaque: !n.destaque });
+          render();
+        });
+      });
+      mount.querySelectorAll('.btn-edit').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.dataset.id;
+          const n = listNews().find(x=>x.id==id);
+          if (n) openModal(n);
+        });
+      });
+      mount.querySelectorAll('.btn-del').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const id = b.dataset.id;
+          if (confirm('Excluir definitivamente?')) {
+            deleteNews(id);
+            render();
+          }
+        });
+      });
+
+      if (location.hash) {
+        const el = document.getElementById('item-'+location.hash.slice(1));
+        if (el) el.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    }
+
+    // helpers imagem
+    function fileToDataURL(file){
+      return new Promise((res, rej)=>{
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+      });
+    }
+    async function makeThumb169(src, outW=1280, outH=720){
+      const img = new Image(); img.src = src; await img.decode();
+      const W = img.naturalWidth, H = img.naturalHeight;
+      const target = 16/9, ratio = W/H;
+      let sx=0, sy=0, sw=W, sh=H;
+      if (ratio > target){ sw = H * target; sx = (W - sw)/2; }
+      else if (ratio < target){ sh = W / target; sy = (H - sh)/2; }
+      const cv = document.createElement('canvas'); cv.width = outW; cv.height = outH;
+      cv.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+      return cv.toDataURL('image/jpeg', 0.85);
+    }
+    function escapeHtml(s){
+      return String(s||'')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+#nav-mount + .container { margin-top: 24px; }
+
+/* ===== Form / campos ===== */
+.card-wrap{
+  max-width: 860px;
+  margin: 24px auto 80px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+
+}
+.card-wrap > h2 { margin: 0 0 14px; padding: 0 6px; }
+
+.grid{ display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+.grid .actions{ grid-column: 1 / -1; }
+@media (max-width: 720px){ .grid{ grid-template-columns: 1fr; } }
+
+.field label{ display:block; margin:2px 0 6px; color: var(--muted); font-size:.9rem; }
+.field input, .field select{
+  width:100%; padding:12px 14px; border-radius:10px;
+  background: rgba(255,255,255,.06); color:var(--text);
+  border:1px solid rgba(255,255,255,.12);
+}
+.field input::placeholder{ color: rgba(255,255,255,.35); }
+
+/* corrige caso o navegador force fundo claro/autofill */
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus{
+  -webkit-text-fill-color: var(--text);
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px rgba(255,255,255,.06) inset;
+}
+
+/* selects compactos para filtros ou linhas dos cards */
+.select-sm{
+  padding: 8px 2rem 8px 12px !important;
+  font-size: .95rem;
+}
+
+/* ===== Lista / cards COMPACTOS ===== */
+.groups{ margin-top: 10px; }
+.group{
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+  background: rgba(0,0,0,.20);
+
+}
+.group > header{
+  padding:10px 12px; font-weight:700; background:rgba(255,255,255,.03);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.group > header .muted{ font-weight:400; }
+
+
+/* remove bullets nas listas de grupos/itens de carros */
+.group, .group ul, .group li {
+  list-style: none;
+margin: 05px;
+  padding: 06px;
+}
+
+
+
+/* card compacto */
+.item{
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:10px; padding:8px 10px; background: rgba(10,12,18,.6);
+}
+.item .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.item .row.top{ justify-content:space-between; }
+.item .meta{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:.95rem; }
+.item .name{ font-weight:800; }
+.item .sep{ opacity:.35; }
+.badge{ font-size:.75rem; padding:2px 8px; border-radius:999px; }
+.badge.disp{ background:#173e2b; color:#7dffb8; border:1px solid rgba(125,255,184,.25); }
+.badge.mov{ background:#3a2e12; color:#ffd24a; border:1px solid rgba(255,210,74,.35); }
+
+.compact-controls{ display:flex; gap:10px; align-items:center; }
+.compact-controls .select-sm,
+.compact-controls input[type="time"]{
+  padding:6px 1.6rem 6px 10px; font-size:.9rem;
+  background: rgba(255,255,255,.05);
+}
+
+/* observações reduzidas */
+.obs{
+  width:100%; min-height:38px; resize:vertical; margin-top:6px;
+  border-radius:10px; border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04); color:var(--text);
+  padding:8px 10px; font-size:.95rem;
+}
+
+/* destaque 4h sem refeição */
+.alerta{ outline:2px solid rgba(255,77,79,.55); box-shadow: 0 0 0 2px rgba(255,77,79,.12) inset; }
+
+/* botões */
+.btn{ padding:.7rem 1.1rem; border-radius:10px; background:#ffd24a; color:#1a1a1a; border:none; font-weight:700; cursor:pointer; }
+.btn:hover{ filter:brightness(.98); }
+.btn.ghost{ background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18); }
+.icon-btn{ width:34px; height:34px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,.14); color:var(--text); }
+
+/* ===== Modal CCE (centralizado) ===== */
+.cce-modal { position:fixed; inset:0; display:none; justify-content:center; align-items:center; z-index:1000; }
+.cce-modal[aria-hidden="false"]{ display:flex; }
+.cce-modal__backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+.cce-modal__dialog{
+  position:relative; width:min(520px, calc(100% - 32px)); padding:20px;
+  background:#0e1016; border:1px solid rgba(255,255,255,.08); border-radius:16px;
+  box-shadow:0 10px 40px rgba(0,0,0,.4); color:var(--text);
+}
+.cce-modal__title{ margin:0 0 8px; font-weight:700; font-size:1.125rem; }
+.cce-modal__msg{ margin:0 0 16px; color:var(--muted); }
+.cce-modal__actions{ display:flex; gap:10px; justify-content:flex-end; }
+.cce-modal__x{ position:absolute; top:6px; right:8px; width:30px; height:30px; border:1px solid rgba(255,255,255,.12); border-radius:8px; background:transparent; color:var(--text); }
+.cce-modal .btn.ghost{ color:#fff; }
+
+/* filtros e ações finais */
+.filters{ margin: 10px 4px 6px; display:flex; gap:10px; align-items:center; }
+.filters .lbl{ color: var(--muted); font-size:.9rem; }
+.end-actions{ display:flex; gap:10px; margin-top: 10px; }
+
+

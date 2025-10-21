@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de Descanso — CCE 4.0</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/modules/calculadora-descanso/style.scoped.css" />
+  <script type="module">
+    import { renderNavbar, bindNavbar } from '/assets/ui.js';
+    import { requireAuth } from '/assets/auth.js';
+    window.addEventListener('DOMContentLoaded', ()=>{
+      requireAuth();
+      document.getElementById('nav-mount').innerHTML = renderNavbar('descanso');
+      bindNavbar();
+    });
+  </script>
+</head>
+<body class="app-bg">
+  <div id="nav-mount"></div>
+
+  <main class="container">
+    <h1>Calculadora de Descanso</h1>
+
+    <section class="desk-card">
+      <div class="form-grid">
+        <div class="field">
+          <label for="escala">Escala atual</label>
+          <select id="escala">
+            <option value="1">Primeira</option>
+            <option value="2">Segunda</option>
+            <option value="3">Terceira</option>
+            <option value="4">Quarta</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hora">Hora de fechamento</label>
+          <input type="text" id="hora" placeholder="dd/mm/aaaa hh:mm" inputmode="numeric" maxlength="16">
+          <small class="hint">Ex.: 10/02/2025 13:40</small>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btn-calc" class="btn">Calcular</button>
+        <button id="btn-clear" class="btn ghost">Limpar</button>
+      </div>
+
+      <div id="resultado" class="result"></div>
+      <button id="shareBtn" class="btn whats" style="display:none;">Compartilhar no WhatsApp</button>
+    </section>
+  </main>
+
+  <script src="/modules/calculadora-descanso/script.js"></script>
+</body>
+</html>

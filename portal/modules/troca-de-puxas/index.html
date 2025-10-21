@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Troca de Puxas — CCE</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script type="module">
+    import { renderNavbar, bindNavbar } from '/assets/ui.js';
+    import { requireAuth } from '/assets/auth.js';
+    window.addEventListener('DOMContentLoaded', ()=>{
+      requireAuth();
+      document.getElementById('nav-mount').innerHTML = renderNavbar('puxas');
+      bindNavbar();
+    });
+  </script>
+</head>
+<body class="app-bg">
+  <div id="nav-mount"></div>
+  <main class="container">
+    <h1>Troca de Puxas</h1>
+    <p class="muted">Em breve.</p>
+  </main>
+</body>
+</html>
