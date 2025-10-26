@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confirmar redefinição — CCE 4.0</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+  <script type="module">import "./assets/auth.js";</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', ()=>{
+      const params = new URLSearchParams(location.search);
+      const token = params.get('token');
+      const info = document.getElementById('info');
+      info.textContent = token ? 'Token encontrado, defina sua nova senha.' : 'Token ausente.';
+      const form = document.getElementById('confirmForm');
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        if(!token){ alert('Token inválido.'); return; }
+        const pwd = form.querySelector('input[name=nova]').value;
+        try{
+          await window.cceAuth.resetWithToken(token, pwd);
+          alert('Senha redefinida com sucesso!');
+          location.href = './index.html';
+        }catch(err){ alert(err.message); }
+      });
+    });
+  </script>
+</head>
+
+<body class="form_cadastro">
+  <!-- fundo com gradientes -->
+  <div class="login-bg-layer"></div>
+
+
+  <div class="card auth-card">
+    <h1>Definir nova senha</h1>
+    <p id="info" class="muted"></p>
+    <form id="confirmForm" class="form">
+      <label>Nova senha</label>
+      <input type="password" name="nova" required />
+      <button class="btn primary" type="submit">Salvar</button>
+    </form>
+    <a class="link" href="./index.html">Voltar ao login</a>
+  </div>
+
+</body>
+</html>

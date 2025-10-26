@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Passagem de Turno — CCE 4.0</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/modules/passagem-de-turno/style.scoped.css" />
+  <script type="module">
+    import { renderNavbar, bindNavbar } from '/assets/ui.js';
+    import { requireAuth } from '/assets/auth.js';
+    window.addEventListener('DOMContentLoaded', ()=>{
+      requireAuth();
+      document.getElementById('nav-mount').innerHTML = renderNavbar('turno');
+      bindNavbar();
+    });
+  </script>
+</head>
+<body class="app-bg">
+  <div id="nav-mount"></div>
+
+  <main class="container">
+    <h1>Passagem de Turno</h1>
+
+    <section class="card-wrap">
+      <!-- Cabeçalho -->
+      <div class="header-grid">
+        <div class="field">
+          <label>Data</label>
+          <input id="pt-data" type="date" />
+        </div>
+        <div class="field">
+          <label>Turno</label>
+          <select id="pt-turno">
+            <option>Manhã</option>
+            <option>Pernoite</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Responsável (saída)</label>
+          <input id="pt-resp-out" type="text" placeholder="Nome" />
+        </div>
+        <div class="field">
+          <label>Responsável (entrada)</label>
+          <input id="pt-resp-in" type="text" placeholder="Nome" />
+        </div>
+      </div>
+
+      <!-- 1) Equipe em hotel -->
+      <section class="section">
+        <h2>Equipe em hotel</h2>
+        <div class="table-actions">
+          <button class="btn sm" data-add="hotel">+ Adicionar linha</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-hotel" class="cce-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Hotel</th>
+                <th>Fim do descanso</th>
+                <th>Observação</th>
+                <th class="min">Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2) Extrapolação no turno -->
+      <section class="section">
+        <h2>Extrapolação no turno</h2>
+        <div class="table-actions">
+          <button class="btn sm" data-add="extra">+ Adicionar linha</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-extra" class="cce-table">
+            <thead>
+              <tr>
+                <th>Sede</th>
+                <th>Matrícula</th>
+                <th>Motivo da extrapolação</th>
+                <th>Por que não trocou?</th>
+                <th class="min">Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 3) Vazios programados -->
+      <section class="section">
+        <h2>Vazios programados</h2>
+        <div class="table-actions">
+          <button class="btn sm" data-add="vazios">+ Adicionar linha</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-vazios" class="cce-table">
+            <thead>
+              <tr>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Prefixo</th>
+                <th>Previsão</th>
+                <th class="min">Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 4) Carregados em circulação -->
+      <section class="section">
+        <h2>Carregados em circulação</h2>
+        <div class="table-actions">
+          <button class="btn sm" data-add="cargas">+ Adicionar linha</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-cargas" class="cce-table">
+            <thead>
+              <tr>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Prefixo</th>
+                <th>Observação</th>
+                <th class="min">Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5) Pontos de Atenção Planalto + Baixada Santista -->
+      <section class="section">
+        <h2>Pontos de Atenção Planalto + Baixada Santista</h2>
+        <div class="table-actions">
+          <button class="btn sm" data-add="atencao">+ Adicionar linha</button>
+        </div>
+        <div class="table-wrap">
+          <table id="tbl-atencao" class="cce-table">
+            <thead>
+              <tr>
+                <th>Atenção específica por sede</th>
+                <th class="min">Ações</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6) Observações gerais -->
+      <section class="section">
+        <h2>Observações gerais</h2>
+        <textarea id="obs-gerais" placeholder="- ..."></textarea>
+      </section>
+
+      <!-- Ações finais -->
+      <div class="actions">
+        <button id="btn-pdf" class="btn">Gerar PDF</button>
+        <button id="btn-clear" class="btn ghost danger">Limpar tudo</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="/modules/passagem-de-turno/script.js"></script>
+<script type="module" src="/assets/bridge-modules.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal CCE 4.0</title>
+
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../assets/overrides-2025-10-07.css" />
+  <link rel="stylesheet" href="/assets/overrides-news.css" />
+
+  <!-- (Opcional) pré-carrega o módulo da UI para cachear mais cedo -->
+  <link rel="modulepreload" href="../assets/ui.js" />
+
+  <style>
+    /* Cards do feed com thumbnail */
+    .feed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:20px;}
+    .feed-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;}
+    .feed-card:hover{transform:translateY(-4px);box-shadow:0 4px 12px rgba(0,0,0,.25);}
+    .feed-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);}
+    .feed-body{padding:14px 16px;display:flex;flex-direction:column;gap:6px;}
+    .feed-title{font-weight:700;font-size:1.05rem;}
+    .feed-sub{opacity:.85;font-size:.95rem;}
+    .feed-meta{opacity:.65;font-size:.85rem;margin-top:2px;}
+    .feed-actions{margin-top:10px;}
+    .feed-actions .btn{padding:6px 10px;border-radius:10px;}
+  </style>
+</head>
+
+<body>
+  <div id="nav-mount"></div>
+
+  <main class="container">
+    <h1>Portal CCE</h1>
+    <section id="news-feed"></section>
+
+    <!-- Mascote fixo -->
+    <img id="news-mascot" class="mascote" src="/assets/dicas.png" alt="Dicas e avisos">
+    <span id="news-badge"></span>
+  </main>
+
+  <!-- Bootstrap ÚNICO -->
+<script type="module">
+
+// depois
+  import { requireAuthFirebase } from '../assets/auth.js';
+  import { renderNavbar, bindNavbar } from '../assets/ui.js';
+  import { renderFeed, initMascotNotifier, ensureWelcomeSeed } from '../assets/news.js';
+
+  // 1) sessão
+  await requireAuthFirebase();
+
+  // 2) navbar
+  const mount = document.getElementById('nav-mount');
+  mount.innerHTML = renderNavbar('portal');
+  bindNavbar();
+
+  // 3) notícias (Firestore only)
+  // opcional: se seu banco ainda não tem nada, mantém o seed
+  await ensureWelcomeSeed();
+
+  // IMPORTANTE: chamar e AGUARDAR o render do feed
+  await renderFeed('#news-feed');
+
+  // balão do mascote (usa só Firestore também)
+  initMascotNotifier();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CCE 4.0 — Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css" />
+
+
+
+
+
+
+
+  <!-- REMOVIDO: import de auth.js aqui no <head> para evitar corrida/duplicação -->
+</head>
+
+<body class="app-bg login-bg">
+  <!-- fundo com gradientes -->
+  <div class="login-bg-layer"></div>
+
+  <main class="auth-shell">
+    <!-- Painel de texto puro, sem moldura -->
+    <section class="welcome-plain" aria-label="Boas-vindas">
+      <p class="welcome-text">
+        <em>
+          O Portal CCE 4.0 foi desenvolvido para integrar, em uma única plataforma, as principais
+          ferramentas operacionais do programador de equipagem. Seu objetivo é otimizar o fluxo de
+          informações, padronizar processos e proporcionar ao programador uma visão ampla e centralizada
+          de suas atividades. Através de módulos inteligentes, o sistema permite registrar, consultar e
+          gerenciar dados com agilidade e segurança, fortalecendo a comunicação entre equipes e aumentando
+          a eficiência nas tomadas de decisão. Seja bem vindo.
+        </em>
+      </p>
+    </section>
+
+    <!-- Card de login -->
+    <section class="auth-panel login" aria-label="Acesso ao sistema">
+      <div class="login-logo">
+        <img src="./assets/logo.png" alt="MRS" />
+      </div>
+
+      <h2 class="login-title">Portal Unificado CCE 4.0</h2>
+
+      <!-- FORM OFICIAL (sem action/method; quem trata é auth_bindings.js) -->
+     
+	 <form id="login-form" autocomplete="on" class="form">
+        <label for="login">Login</label>
+        <input id="login" type="text" autocomplete="username" placeholder="Matrícula (ou login)">
+
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" autocomplete="current-password" placeholder="Senha">
+
+        <button class="btn primary" type="submit">Entrar</button>
+        <p id="loginError" class="error" aria-live="polite"></p>
+
+        <div class="login-links">
+          <a href="./first-access.html">Primeiro acesso</a>
+          <a href="./reset.html">Esqueci minha senha</a>
+        </div>
+      </form>
+      <!-- FIM DO FORM - (REMOVIDO o </form> duplicado) -->
+
+ 
+
+
+
+      <footer class="login-footer">Desenvolvido por CCE 4.0.</footer>
+    </section>
+  </main>
+
+  <!-- ===== SCRIPTS OFICIAIS (apenas estes) ===== -->
+  <script type="module" src="./assets/auth.js"></script>
+  <script type="module" src="./assets/auth_bindings.js"></script>
+
+  <!-- REMOVIDOS:
+       - script inline que forçava matrícula com 8 dígitos
+       - script inline que fazia login via sessionStorage e redirecionava
+       - duplicatas de <script type="module" src="./assets/auth.js"> e auth_bindings.js
+  -->
+</body>
+</html>

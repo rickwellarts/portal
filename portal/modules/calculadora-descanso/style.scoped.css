@@ -1,0 +1,131 @@
+/* Escopo do módulo Descanso — segue o tema global (não toca no body) */
+#nav-mount + .container { margin-top: 24px; }
+
+.desk-card{
+  max-width: 720px;
+  margin: 24px auto 64px;
+  padding: 20px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+}
+
+.form-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px){
+  .form-grid{ grid-template-columns: 1fr 1fr; }
+}
+
+.field label{
+  display:block;
+  font-size:.9rem;
+  color: var(--muted);
+  margin-bottom:6px;
+}
+
+.field input,
+/* Corrige cor do texto e fundo do dropdown do select */
+/* Ícone dourado da seta no canto direito do select */
+.field select {
+  position: relative;
+  color: var(--text);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding-right: 2.5rem; /* espaço pra seta */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ffd24a 50%),
+    linear-gradient(135deg, #ffd24a 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.4rem) center,
+    calc(100% - 1.2rem) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.field select:hover {
+  border-color: rgba(255,210,74,0.4);
+  box-shadow: 0 0 6px rgba(255,210,74,0.2);
+}
+
+.field select option {
+  background-color: #16181f;
+  color: #fff;
+}
+
+/* Firefox escuro */
+@-moz-document url-prefix() {
+  .field select {
+    color-scheme: dark;
+  }
+}
+
+
+.field input::placeholder{ color: rgba(255,255,255,.35); }
+.hint{ font-size:.8rem; color: var(--muted); }
+
+.actions{
+  display:flex; gap:12px; margin-top:10px; flex-wrap:wrap;
+}
+.btn{
+  padding:.7rem 1.1rem;
+  border-radius:10px;
+  background: #ffd24a;
+  color:#1a1a1a;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn:hover{ filter:brightness(0.98); }
+.btn.ghost{
+  background: transparent;
+  color: var(--text);
+  border:1px solid rgba(255,255,255,.18);
+}
+.btn.whats{
+  margin-top:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+.result{ margin-top:18px; }
+
+.card-result{
+  margin-top:6px;
+  padding:16px;
+  border-radius:12px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.card-result .pill{
+  display:inline-block;
+  font-size:.8rem;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#1f2937;
+  color:#ffe082;
+  border:1px solid rgba(255,255,255,.12);
+}
+.card-result .title{
+  margin-top:6px; color:var(--muted); font-size:.9rem;
+}
+.card-result .value{
+  font-size:1.4rem; font-weight:800; margin-top:2px;
+}
+
+/* mensagens */
+.msg.error{
+  padding:12px 14px; border-radius:10px;
+  background: rgba(255,77,79,.15);
+  border:1px solid rgba(255,77,79,.35);
+  color:#ffb3b4;
+}

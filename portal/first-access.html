@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Primeiro acesso — CCE 4.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css" />
+  <script type="module">import "./assets/auth.js";</script>
+
+<script type="module">
+
+
+// ...
+const t = validateToken(matricula, tokenDigitado);
+if (!t) {
+  alert('Token inválido para esta matrícula.');
+  return;
+}
+// se criou usuário com sucesso:
+consumeToken(t.id, matricula);
+
+</script>
+
+
+
+</head>
+
+<body class="form_cadastro">
+  <!-- fundo com gradientes -->
+  <div class="login-bg-layer"></div>
+
+  <div class="card auth-card">
+  <div>
+    <h1>Primeiro acesso</h1>
+  <form id="signup-form" autocomplete="on" class="form">
+<label>Matrícula</label>
+  <input id="s-matricula" required pattern="\d{8}" inputmode="numeric" maxlength="8" placeholder="Matrícula (8 dígitos)">
+ <label>Nome</label> 
+<input id="s-nome" required placeholder="Nome">
+ <label>E-mail (Login)</label> 
+<input id="s-email" type="email" required placeholder="E-mail">
+ <label >Senha</label> 
+<input id="s-senha" type="password" required placeholder="Senha">
+  <label>Token</label>
+<input id="s-token" required placeholder="Token (fornecido pelo Admin)">
+  <!-- (opcional) <input id="s-login" placeholder="Login (se quiser diferente da matrícula)"> -->
+  
+<br></br>
+<button class="btn primary" type="submit">Criar conta</button>
+        <p id="loginError" class="error" aria-live="polite"></p>
+</form>
+<!-- NO FIM DO BODY: -->
+<script type="module" src="./assets/auth.js"></script>
+<script type="module" src="./assets/auth_bindings.js"></script>
+
+ <div class="login-links">
+          <a href="./index.html">Voltar ao login</a>
+        </div>
+
+</div>
+</div>
+
+ <!-- Card de login -->
+    <section class="auth-panel login" aria-label="Acesso ao sistema">
+      
+      <!-- FIM DO FORM - (REMOVIDO o </form> duplicado) -->
+<div class="login-logo">
+        <img src="./assets/logo.png" alt="MRS" />
+      </div>
+
+ <section class="welcome-plain" aria-label="Boas-vindas">
+      <p class="welcome-text">
+        <em>
+          Não utilize dados de acesso reais dos sistemas interno MRS, o portal CCE 4.0 é um facilitador para a rotina do programador de equipagens, não tem e não deve ter nenhuma pareadade com os dados utilizados nos acessos de sistemas utilizados internamente pelos usuários.
+<p>Caso você ainda não tenha um token para o primeiro acesso solicite ao seu gestor e he será enviado.</p>
+        </em>
+      </p>
+    </section>
+
+
+
+      <footer class="login-footer">Desenvolvido por CCE 4.0.</footer>
+    </section>
+
+</div>
+<script type="module" src="/assets/first_access.js"></script>
+
+</body>
+</html>

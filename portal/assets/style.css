@@ -1,0 +1,231 @@
+:root{
+  --bg:#0f1115; --card:#171a21; --text:#e8ecf1; --muted:#a7b0bd;
+  --primary:#ffc107; --primary-ink:#1b1b1b; --accent:#19a1ff; --radius:16px;
+}
+
+/* ===== Base */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0; font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:linear-gradient(180deg,#0d0f14,#111522 60%,#0d0f14);
+}
+.app-bg.center{ display:grid; place-items:center; min-height:100vh; padding:24px; }
+
+.form_cadastro{ 
+  
+position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  max-width:1100px; margin:0 auto; padding:clamp(16px,4vw,40px);
+  align-items:center; justify-content:center; min-height:100vh;
+position:relative; overflow:hidden;
+background:url("./locomotiva.png") top left no-repeat; background-size:cover;
+  background-attachment:fixed;
+}
+
+/* Balão do mascote */
+.mascot-balloon{
+  position: fixed;
+  right: 150px;
+  bottom: 120px;
+  max-width: 260px;
+  padding: 12px 16px;
+  border-radius: 12px 12px 0 12px;
+  background: #BCD2EE;
+  color: #000;
+  line-height: 1.35;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  display: none;
+  z-index: 1100;
+}
+.mascot-balloon a{
+  display: block;
+  text-decoration: none;
+  color: #0F1115;
+}
+.mascot-balloon a:hover{ color:#556; text-decoration:none; }
+
+
+header.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+
+
+/* containers */
+.container, .admin-shell{ max-width:1110px; margin:24px auto; padding:0 16px; }
+
+/* cards (largura total por padrão) */
+.card{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  padding:24px;
+  width:100%;
+  position:relative; z-index:0;
+}
+.card + .card{ margin-top:16px; }
+
+/* versão estreita quando precisar (ex: login) */
+.card.narrow{ width:min(520px,92vw); }
+
+.logo{ width:72px; height:auto; margin:0 auto 12px; display:block; }
+
+.form{ display:grid; gap:10px; }
+input,textarea,select{
+  width:100%; background:#0e1016; border:1px solid rgba(255,255,255,.09);
+  color:var(--text); padding:12px 14px; border-radius:12px; outline:none;
+}
+input:focus,textarea:focus,select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(25,161,255,.15); }
+label{ font-weight:600; font-size:13px; color:var(--muted); }
+.muted{ color:var(--muted); }
+.error{ color:#ff6b7a; min-height:20px; }
+
+.btn{
+  display:inline-block; border:1px solid rgba(255,255,255,.12);
+  padding:10px 14px; border-radius:10px; background:rgba(255,255,255,.08);
+  color:#eee; text-decoration:none; cursor:pointer; margin-right:8px;
+}
+.btn:hover{ background:rgba(255,255,255,.12); color:#fff; }
+.btn.primary, .btn-primary{ background:var(--primary); color:#111; border-color:var(--primary); }
+.btn.primary:hover, .btn-primary:hover{ filter:brightness(1.05); color:#fff;}
+.btn-xs{ padding:4px 8px; font-size:12px; }
+
+.link{ color:var(--accent); text-decoration:none; }
+.link:hover{ text-decoration:underline;  }
+
+.hint{ font-size:12px; opacity:.7; margin-top:4px; }
+.list-flat{ list-style:disc; margin:12px 0 0 24px; }
+.switch{ display:flex; align-items:center; gap:8px; margin:10px 0; }
+
+/* ===== Navbar (portal/admin) */
+.navbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(15,17,21,.6); backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex; align-items:center; gap:12px; padding:10px 16px;
+}
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800; color:var(--text); text-decoration:none; }
+.brand img{ width:40px; height:auto; }
+.nav-center{ display:flex; gap:10px; flex:1; justify-content:center; flex-wrap:wrap; }
+.nav-center a{ color:var(--text); text-decoration:none; padding:8px 10px; border-radius:999px; border:1px solid transparent; }
+.nav-center a:hover{ background:rgba(255,255,255,.06); }
+.nav-center a.active{ border-color:var(--primary); background:rgba(255,193,7,.12); }
+.nav-right{ margin-left:auto; }
+.dropdown{ position:relative; }
+.user-btn{ background:#0e1016; color:var(--text); border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:8px 12px; cursor:pointer; }
+.dropdown-menu{
+  position:absolute; right:0; top:calc(100% + 8px);
+  background:var(--card); border:1px solid rgba(255,255,255,.06);
+  border-radius:12px; min-width:180px; display:none; box-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.dropdown-menu.open{ display:block; }
+.dropdown-menu a{ display:block; padding:10px 12px; color:var(--text); text-decoration:none; }
+.dropdown-menu a:hover{ background:rgba(255,255,255,.06); }
+
+/* ===== Feed */
+.feed{ display:grid; gap:16px; margin-top:16px; }
+.feed-item{ background:#0e1016; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:14px; }
+.feed-item h3{ margin:0 0 6px; }
+.feed-item .muted{ font-size:12px; margin:0 0 10px; }
+
+footer{ margin-top:18px; text-align:center; color:var(--muted); font-size:12px; }
+
+/* ===== Select global (CCE 4.0) */
+select{
+  position:relative; color:var(--text,#fff);
+  background-color:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12); border-radius:10px;
+  padding:12px 2.5rem 12px 14px; font-size:1rem; appearance:none;
+  -webkit-appearance:none; -moz-appearance:none;
+  background-image:
+    linear-gradient(45deg,transparent 50%,#ffd24a 50%),
+    linear-gradient(135deg,#ffd24a 50%,transparent 50%);
+  background-position: calc(100% - 1.4rem) center, calc(100% - 1.2rem) center;
+  background-size:5px 5px,5px 5px; background-repeat:no-repeat;
+  transition:border-color .2s, box-shadow .2s, background-position .2s;
+}
+select:hover,select:focus{ border-color:rgba(255,210,74,.4); box-shadow:0 0 8px rgba(255,210,74,.25); outline:none; }
+select option{ background-color:#16181f; color:#fff; padding:8px 12px; }
+@-moz-document url-prefix(){ select{ color-scheme:dark; } }
+
+/* ===== Login BG + grid */
+.login-bg{
+  min-height:100vh; position:relative; overflow:hidden;
+  background:url("./locomotiva.png") top left no-repeat; background-size:cover;
+  background-attachment:fixed;
+}
+.login-bg-layer{
+  position:fixed; inset:0; pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(10,13,20,.85) 0%,rgba(10,13,20,.60) 35%,rgba(10,13,20,.85) 100%),
+    linear-gradient(0deg,rgba(10,13,20,.35) 0%,rgba(10,13,20,0) 20%,rgba(10,13,20,0) 80%,rgba(10,13,20,.35) 100%),
+    radial-gradient(1200px 600px at 80% 40%, rgba(10,13,20,0) 0%, rgba(10,13,20,.65) 100%);
+}
+.auth-shell{
+  position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  max-width:1100px; margin:0 auto; padding:clamp(16px,4vw,40px);
+  align-items:center; justify-content:center; min-height:100vh;
+}
+@media (max-width:980px){ .auth-shell{ grid-template-columns:1fr; max-width:780px; } }
+@media (max-width:560px){ .login-bg{ background-attachment:scroll; } }
+
+/* login links */
+.login-links{ display:flex; justify-content:space-between; gap:12px; margin-top:6px; font-weight:600; }
+.login-links a{ color:#ffd24a; text-decoration:none; }
+.login-links a:hover{ text-decoration:underline; opacity:.9; }
+
+/* ===== Editor light */
+.editor{ min-height:160px; line-height:1.5; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:10px 12px; color:#f2f2f2; }
+.editor-toolbar{ display:flex; gap:6px; margin-bottom:8px; }
+.editor-toolbar .btn{ padding:6px 10px; }
+
+
+
+
+
+
+
+/* ===== Admin layout (centralizado) */
+.admin-nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; gap:8px; align-items:center;
+  padding:10px 12px; margin:0 auto 16px; max-width:1100px;
+  background:rgba(0,0,0,.35); backdrop-filter:blur(6px);
+  border-radius:12px; border:1px solid rgba(255,255,255,.06);
+}
+.admin-nav .btn{ height:36px; }
+.admin-nav .btn.btn-primary{ box-shadow:0 0 0 2px rgba(255,200,0,.25) inset; }
+.admin-sections{ display:grid; grid-template-columns:1fr; gap:16px; }
+@media (min-width:1024px){ .admin-sections{ grid-template-columns:1fr; } }
+.table{ width:100%; border-collapse:collapse; }
+.table th,.table td{ padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.06); }
+.table th{ text-align:left; color:#eaeaea; font-weight:600; }
+
+
+/* ===== Modal Portal CCE (global p/ Admin) ===== */
+.cce-modal{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;z-index:1600}
+.cce-modal[aria-hidden="true"]{display:none}
+.cce-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(2px)}
+.cce-modal__dialog{
+  position:relative;
+  background:#12161c;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+  width:min(560px,92vw);
+  padding:20px;
+  color:#e8edf5;
+  animation: cce-fade-in .2s ease-out;
+}
+.cce-modal__title{margin:0 0 8px;font-weight:700;font-size:1.1rem}
+.cce-modal__msg{margin:0 0 16px;color:#cbd5e1}
+.cce-modal__actions{display:flex;gap:8px;justify-content:flex-end}
+.cce-modal__x{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:8px;
+  background:transparent;border:1px solid rgba(255,255,255,.14);color:#e8edf5;cursor:pointer}
+.cce-modal__x:hover{background:rgba(255,255,255,.08)}
+@keyframes cce-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+

@@ -1,0 +1,331 @@
+#extrapolacao /* MRS blue theme + fixes (legibilidade e checkboxes) */
+:root{
+  --mrs-blue: #003A5D;
+  --card-gray: #E6E6E6;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #349e97;
+  --white: #ffffff;
+  --shadow: 0px 4px 14px rgba(0,0,0,0.15);
+  --radius: 12px;
+}#extrapolacao *{box-sizing:border-box}#extrapolacao #extrapolacao{ margin: 0; font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif; background-color: var(--mrs-blue); color: var(--text); }#extrapolacao .container{ display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; }#extrapolacao .sidebar{ padding: 22px; background: var(--white); border-right: 1px solid rgba(0,0,0,0.06); }#extrapolacao .sidebar h2{ color: var(--muted); font-weight: 700; font-size: 1.15rem; margin: 0 0 16px 0; }#extrapolacao .sidebar label{ font-weight: 700; font-size: 0.9rem; display: block; margin-top: 10px; }#extrapolacao .sidebar input, #extrapolacao .sidebar select, #extrapolacao .sidebar textarea{
+  width: 100%; margin-top: 6px; margin-bottom: 10px; padding: 10px 12px;
+  border: 1px solid #d1d5db; border-radius: var(--radius); outline: none; color: var(--text);
+}#extrapolacao .sidebar input[type="checkbox"]{ width: auto; margin: 0 6px 0 0; padding: 0; display: inline-block; vertical-align: middle; accent-color: #0ea5e9; }#extrapolacao .sidebar input:focus, #extrapolacao .sidebar select:focus, #extrapolacao .sidebar textarea:focus{ border-color: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.25); }#extrapolacao .actions{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 6px 0; }#extrapolacao .sidebar button{ background-color: var(--accent); color: white; border: none; padding: 10px 12px; border-radius: var(--radius); cursor: pointer; font-weight: 700; transition: transform .08s ease, opacity .15s ease; }#extrapolacao .sidebar button:hover{ transform: translateY(-1px); opacity: .95; }#extrapolacao .sidebar .ghost{ background: #0ea5e9; }#extrapolacao .som{ margin-top: 8px; display: grid; grid-template-columns: auto auto 1fr; gap: 8px; align-items: center; color: var(--muted); }#extrapolacao .search{ margin-top: 14px; }#extrapolacao .search .adv{ margin-top: 8px; display: grid; gap: 6px; }#extrapolacao .check{ display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-weight: 600; }#extrapolacao .sidebar select, #extrapolacao .controls select, #extrapolacao option{ color: #111827 !important; background: #ffffff !important; }#extrapolacao .export{ margin-top: 12px; }#extrapolacao .export .dates{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 6px 0; }#extrapolacao .main{ display: grid; grid-template-rows: auto auto 1fr; min-height: 100vh; background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%), var(--mrs-blue); }#extrapolacao .header{ display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.12); }#extrapolacao .brand{ display: flex; align-items: center; gap: 10px; }#extrapolacao .logo{ background: #F7DF1E; color: #111827; font-weight: 900; padding: 6px 10px; border-radius: 8px; box-shadow: var(--shadow); letter-spacing: .8px; }#extrapolacao .divider{ width: 2px; height: 20px; background: rgba(255,255,255,0.5); }#extrapolacao .sigla{ color: #e5e7eb; font-weight: 800; letter-spacing: .6px; }#extrapolacao .controls{ display: flex; align-items: center; gap: 8px; color: #e5e7eb; }#extrapolacao .controls select{ padding: 8px 10px; border-radius: 999px; border: 1px solid rgba(17,24,39,0.2); background: #ffffff; color: #111827; outline: none; }#extrapolacao .tabs{ display: flex; gap: 8px; padding: 12px 18px; }#extrapolacao .tab{ background: rgba(255,255,255,0.18); color: #f3f4f6; border: 1px solid rgba(255,255,255,0.25); padding: 10px 14px; border-radius: 999px; cursor: pointer; letter-spacing: .4px; font-weight: 700; }#extrapolacao .tab.active{ background: #eef2ff; color: #111827; border-color: #eef2ff; }#extrapolacao .cards{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 22px; overflow-y: auto; }#extrapolacao .coluna{    padding: 14px; min-height: 120px; }#extrapolacao .coluna h3{ color: #e5e7eb; margin: 0 0 10px 0; font-weight: 600; letter-spacing: .4px; }#extrapolacao .card{ background-color: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; margin-bottom: 12px; position: relative; }#extrapolacao .card.carregado{ background-color: var(--card-gray); }#extrapolacao .card h4{ margin: 0 0 8px 0; }#extrapolacao .card p{ margin: 4px 0; }#extrapolacao .card p span{ color: #4b5563; font-weight: 600; }#extrapolacao .restante{ margin-top: 10px; font-weight: 800; font-size: 1.6rem; }#extrapolacao .restante.blink{ animation: blink 0.9s infinite alternate ease-in-out; }
+@#extrapolacao keyframes blink{ 0% { color: #b91c1c; transform: translateY(0); }#extrapolacao 100%{ color: #ef4444; transform: translateY(-1px); } }#extrapolacao .botoes{ position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 8px; }#extrapolacao .card .btn{ background: #111827; color: #fff; border: none; border-radius: 8px; padding: 6px 10px; cursor: pointer; }#extrapolacao .card .btn.ghost{ background:#374151; }#extrapolacao .card .btn:hover{ opacity: .92; }#extrapolacao footer{ position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.95); color: #374151; text-align: center; padding: 6px 10px; font-size: 0.85rem; border-top: 1px solid #e5e7eb; }#extrapolacao /* ---- Alerts UI ---- */
+.next-beep{ font-size:0.95rem; font-weight:700; color:#374151; margin-top:2px; }#extrapolacao #toasts{
+  position: fixed; right: 16px; bottom: 16px; display: flex;
+  flex-direction: column; gap: 8px; z-index: 9999;
+}#extrapolacao .toast{ background:#111827; color:#fff; padding:10px 12px; border-radius:10px;
+  box-shadow: var(--shadow, 0 4px 14px rgba(0,0,0,.15)); display:flex; gap:8px; align-items:center;
+  max-width:360px; animation: slideIn .2s ease-out;
+}#extrapolacao .toast strong{ font-weight:800; }#extrapolacao .toast .close{ margin-left:auto; background:transparent; border:none; color:#fff; font-size:16px; cursor:pointer; opacity:.8; }#extrapolacao .toast .close:hover{ opacity:1; }
+@#extrapolacao keyframes slideIn{ from{ transform: translateY(8px); opacity: .0; }#extrapolacao to{ transform: translateY(0); opacity: 1; } }#extrapolacao #banner-alerts{
+  position: fixed; right: 16px; bottom: 84px; background:#991b1b; color:#fff;
+  padding: 10px 12px; border-radius: 10px; box-shadow: var(--shadow, 0 4px 14px rgba(0,0,0,.15));
+  min-width: 260px; max-width: 380px;
+}#extrapolacao #banner-alerts h4{ margin:0 0 6px 0; font-size: 0.95rem; letter-spacing:.2px; }#extrapolacao #banner-alerts ul{ list-style: none; margin: 0; padding: 0; }#extrapolacao #banner-alerts li{ padding: 3px 0; border-top: 1px dashed rgba(255,255,255,.35); }#extrapolacao #banner-alerts li:first-child{ border-top: none; }#extrapolacao /* risco toggle */
+.risco{ margin-top: 8px; display: inline-flex; align-items:center; gap:8px; color:#6b7280; font-weight:700; }
+
+
+/* ===== [FIX] Overflow horizontal + responsividade das duas colunas ===== */
+
+/* 1) O grid das duas colunas precisa poder ENCOLHER de verdade */
+#extrapolacao .cards {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* no lugar de 1fr 1fr */
+  gap: 18px;
+  padding: 22px;
+  overflow-y: auto;
+  overflow-x: hidden; /* mata barra horizontal se sobrar */
+}
+
+/* 2) As colunas não podem impor largura mínima que trave o encolhimento */
+#extrapolacao .coluna { 
+  min-width: 0;                 /* chave para o grid permitir “encolher” */
+  padding: 14px;
+}
+
+/* 3) Os cartões e seus filhos nunca devem ultrapassar a coluna */
+#extrapolacao .card {
+  max-width: 100%;
+  width: 100%;
+  overflow-x: hidden;           /* garante que nada vaze pra fora */
+}
+#extrapolacao .card * {
+  max-width: 100%;
+
+}
+
+/* 4) Widgets comuns que forçam overflow ganham width fluida */
+#extrapolacao input[type="range"],
+#extrapolacao .progress,
+#extrapolacao .bar,
+#extrapolacao .meter {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 5) Botões/flutuantes no canto do card não devem “empurrar” layout */
+#extrapolacao .botoes {
+  right: 10px;
+  top: 10px;
+  max-width: calc(100% - 24px);
+}
+
+/* 6) Em telas menores, afine o grid para evitar corte no limite */
+@media (max-width: 1366px) {
+  #extrapolacao .cards {
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+/* === AJUSTE FINAL DOS CARDS === */
+
+/* Agrupa os botões de ação no canto superior direito */
+#extrapolacao .card,
+#extrapolacao #vazio-cards > *,
+#extrapolacao #carregado-cards > * {
+  position: relative;
+}
+
+/* Botões editar/excluir mais compactos */
+#extrapolacao .card button,
+#extrapolacao #vazio-cards button,
+#extrapolacao #carregado-cards button {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+#extrapolacao .card button:hover {
+  filter: brightness(1.2);
+
+}
+
+/* Reposiciona os botões no canto superior direito */
+#extrapolacao .card button.edit,
+#extrapolacao .card button.delete {
+  position: absolute;
+  top: 8px;
+}
+#extrapolacao .card button.edit { right: 38px; }
+#extrapolacao .card button.delete { right: 8px; }
+
+/* === Linha do "Risco ativo (repetir)" === */
+#extrapolacao .card .risco,
+#extrapolacao .card label[for^="risco"],
+#extrapolacao .card .check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+}
+
+/* Checkbox e texto alinhados horizontalmente */
+#extrapolacao .card input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* Deixa a linha mais limpa */
+#extrapolacao .card .check {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: var(--text);
+}
+
+/* Evita quebra e deslocamento no texto "Risco ativo (repetir)" */
+#extrapolacao .card .check span,
+#extrapolacao .card .check label {
+  white-space: nowrap;
+}
+
+/* Botões dentro dos cards ficam menores e discretos */
+#extrapolacao .card .btn,
+#extrapolacao .card .btn-icon {
+  font-size: 12px;
+  padding: 4px;
+}
+
+/* Form do módulo: fundo escuro + texto claro SEM chance de sumir */
+#extrapolacao .sidebar input,
+#extrapolacao .sidebar textarea,
+#extrapolacao .sidebar select {
+  background: #0e1016 !important;
+  color: #e8ecf1 !important;                 /* texto claro */
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 12px;
+}
+
+/* Placeholder e foco */
+#extrapolacao .sidebar ::placeholder { color: var(--muted) !important; }
+#extrapolacao .sidebar input:focus,
+#extrapolacao .sidebar textarea:focus,
+#extrapolacao .sidebar select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(25,161,255,.15);
+}
+
+/* Autofill do Chrome (não deixa o texto “sumir” em branco) */
+#extrapolacao .sidebar input:-webkit-autofill {
+  -webkit-text-fill-color: #e8ecf1 !important;
+  box-shadow: 0 0 0 1000px #0e1016 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #0e1016 inset !important;
+}
+
+/* Tonalidades para o "Restante" */
+#extrapolacao .tone-green  { color: #2ecc71; }   /* verde */
+#extrapolacao .tone-yellow { color: #f6c343; }   /* amarelo */
+#extrapolacao .tone-orange { color: #ff9f43; }   /* laranja */
+#extrapolacao .tone-red    { color: #ff4d4f; }   /* vermelho */
+#extrapolacao .restante {
+  font-weight: 800;
+  font-size: 1.6rem;       /* ajuste fino se quiser menor/maior */
+  line-height: 1.2;
+}
+
+
+/* ===== Modal Portal CCE — FINAL E CONSISTENTE ===== */
+.cce-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;                 /* centraliza */
+  align-items: center;
+  justify-content: center;
+  z-index: 1600;                 /* acima dos cards/toasts */
+}
+.cce-modal[aria-hidden="true"] {
+  display: none !important;      /* some quando fechado */
+}
+
+.cce-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 0;
+}
+
+.cce-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 92vw);
+  max-width: 100%;
+  background: #12161c;                                /* sólido */
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.55);
+  padding: 18px;
+  color: #e8ecf5;
+  animation: cce-fadeInUp .18s ease-out;
+  opacity: 1 !important;                              /* garante opacidade cheia */
+  filter: none !important;
+  isolation: isolate;
+}
+
+@keyframes cce-fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cce-modal__title {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.cce-modal__msg {
+  margin: 0 0 14px;
+  color: #bfc8d6;
+  line-height: 1.5;
+}
+
+.cce-modal__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.cce-modal__x {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.18);
+  color: #e8ecf5;
+  cursor: pointer;
+}
+.cce-modal__x:hover { background: rgba(255,255,255,.08); }
+
+/* Botões dentro do modal */
+.cce-modal .btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.cce-modal .btn[data-action="ok"] {
+  background: #ffc107;
+  color: #111;
+  border-color: #ffc107;
+}
+.cce-modal .btn.ghost,
+.cce-modal .btn[data-action="cancelar"] {
+  background: transparent;
+  color: #e8ecf5;
+  border-color: rgba(255,255,255,.22);
+}
+.cce-modal .btn.ghost:hover,
+.cce-modal .btn[data-action="cancelar"]:hover {
+  background: rgba(255,255,255,.08);
+}
+
+.cce-modal textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  background: #0e1318;
+  color: #e8ecf5;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+
+
+.justify-cta{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: #ffc107;
+  color: #111;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+  cursor: pointer;
+  z-index: 2000;
+  display: none;
+}
+.justify-cta:hover{ filter: brightness(1.03); transform: translateY(-1px); }
+.justify-cta:active{ transform: translateY(0); }
+.justify-cta #justify-count{ margin-left: 6px; font-weight: 700; }
+
+
